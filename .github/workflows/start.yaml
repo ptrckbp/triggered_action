@@ -10,4 +10,4 @@ jobs:
       - env:
           MESSAGE: ${{ github.event.client_payload.message }}
           SECRET: ${{ secrets.TESTING }}
-        run: echo $MESSAGE $SECRET
+        run: echo $SECRET
