@@ -6,18 +6,43 @@ on:
       - completed
 
 jobs:
-  trigger-botpress-electron:
+  test-curl-action:
+    name: "Perform REST API"
     runs-on: ubuntu-latest
     steps:
-      # Create check run
-      - uses: octokit/request-action@v2.x
-        id: create_check_run
+      - name: "Call API"
+        uses: indiesdev/curl@v1.1
         with:
-          route: POST https://api.github.com/repos/botpress/botpress-electron/dispatches
-          name: 'Trigger botpress-electron'
-          head_sha: ${{ github.sha }}
-          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT }}
+          # The target URL
+          # Required: true if custom-config is not set
+          url: https://api.github.com/repos/botpress/botpress-electron/dispatches
 
-      # Update check run to completed, successful status
+          # The request method, basically it's one of GET|POST|PUT|PATCH
+          # Default is GET
+          method: "POST"
+
+          # Headers can be passed through json object string
+          headers: { "Accept": "application/vnd.github.v3+json","Authorization": ${{ secrets.PAT }} }
+
+          # Body request
+          # Apply only to POST|PUT request
+          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
+
+
+
+# jobs:
+#   trigger-botpress-electron:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Create check run
+#       - uses: octokit/request-action@v2.x
+#         id: create_check_run
+#         with:
+#           route: POST https://api.github.com/repos/botpress/botpress-electron/dispatches
+#           name: 'Trigger botpress-electron'
+#           head_sha: ${{ github.sha }}
+#           body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.PAT }}
+
+#       # Update check run to completed, successful status
