@@ -13,9 +13,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: create_check_run
         with:
-          route: POST /repos/{owner}/{repo}/check-runs
-          owner: botpress
-          repo: botpress-electron
+          route: POST /repos/botpress/botpress-electron/dispatches
           name: 'Trigger botpress-electron'
           head_sha: ${{ github.sha }}
           body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
