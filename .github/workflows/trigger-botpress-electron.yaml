@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Get Release Info
         id: 'get_release_details'
-        uses: gh-actions/get_release_details
+        uses: gh-actions/get_release_details@v2
 
       - name: 'Call API'
         uses: indiesdev/curl@v1.1
