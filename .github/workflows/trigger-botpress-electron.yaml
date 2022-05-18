@@ -1,16 +1,20 @@
-name: Check run
+name: Trigger Botpress Electron
 on:
   workflow_run:
-    workflows: ['START']
+    workflows: ['Release Binaries']
     types:
       - completed
 
 jobs:
-  test-curl-action:
-    name: "Perform REST API"
+  trigger-botpress-electron:
+    name: 'Perform REST API'
     runs-on: ubuntu-latest
     steps:
-      - name: "Call API"
+      - name: Get Release Info
+        id: 'get_release_details'
+        uses: gh-actions/get_release_details
+
+      - name: 'Call API'
         uses: indiesdev/curl@v1.1
         with:
           # The target URL
@@ -19,12 +23,11 @@ jobs:
 
           # The request method, basically it's one of GET|POST|PUT|PATCH
           # Default is GET
-          method: "POST"
+          method: 'POST'
 
           # Headers can be passed through json object string
           headers: '{ "Accept": "application/vnd.github.v3+json","Authorization": "token ${{ secrets.PAT }}" }'
 
           # Body request
           # Apply only to POST|PUT request
-          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.7"}}'
-
+          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "${{steps.get_release_details.outputs.latest_tag}}","DISPLAY_VERSION": "${{steps.get_release_details.outputs.version}}" } }'
