@@ -1,0 +1,25 @@
+name: Check run
+on:
+  workflow_run:
+    workflows: ['START']
+    types:
+      - completed
+
+jobs:
+  trigger-botpress-electron:
+    runs-on: ubuntu-latest
+    steps:
+      # Create check run
+      - uses: octokit/request-action@v2.x
+        id: create_check_run
+        with:
+          route: POST /repos/{owner}/{repo}/check-runs
+          owner: botpress
+          repo: botpress-electron
+          name: 'Trigger botpress-electron'
+          head_sha: ${{ github.sha }}
+          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Update check run to completed, successful status
