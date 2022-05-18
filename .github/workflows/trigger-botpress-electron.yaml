@@ -18,6 +18,6 @@ jobs:
           head_sha: ${{ github.sha }}
           body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "v12_27_0","DISPLAY_VERSION": "12.27.0"}}'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT }}
 
       # Update check run to completed, successful status
