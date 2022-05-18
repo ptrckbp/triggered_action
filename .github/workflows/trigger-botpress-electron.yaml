@@ -22,7 +22,7 @@ jobs:
           method: "POST"
 
           # Headers can be passed through json object string
-          headers: '{ "Accept": "application/vnd.github.v3+json","Authorization": ${{ secrets.PAT }} }'
+          headers: '{ "Accept": "application/vnd.github.v3+json","Authorization": token ${{ secrets.PAT }} }'
 
           # Body request
           # Apply only to POST|PUT request
