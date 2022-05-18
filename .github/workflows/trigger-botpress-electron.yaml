@@ -10,10 +10,21 @@ jobs:
     name: 'Perform REST API'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          # Repository name with owner. For example, actions/checkout
+          # Default: ${{ github.repository }}
+          repository: 'botpress/botpress'
+
+          # Relative path under $GITHUB_WORKSPACE to place the repository
+          path: 'cloner'
+
       - name: Get Release Info
         id: 'get_release_details'
         uses: botpress/gh-actions/get_release_details@v1
-        
+          with:
+            path: "cloner"
+
       - name: echo information
         run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
 
