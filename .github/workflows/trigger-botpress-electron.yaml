@@ -20,7 +20,7 @@ jobs:
           path: 'cloner'
       - name: Go into path
         working-directory: ./cloner
-        run: pwd
+        run: ls
 
       - name: Get Release Info
         id: 'get_release_details'
@@ -28,7 +28,7 @@ jobs:
       
       - name: Go out of path
         working-directory: ..
-        run: pwd
+        run: ls
 
       - name: echo information
         run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
