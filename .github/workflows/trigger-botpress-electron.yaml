@@ -20,15 +20,15 @@ jobs:
           path: 'cloner'
       - name: Go into path
         working-directory: ./cloner
-        run: ls
+        run: ll
 
       - name: Get Release Info
         id: 'get_release_details'
         uses: botpress/gh-actions/get_release_details@v1
       
       - name: Go out of path
-        working-directory: ..
-        run: ls
+        working-directory: ".."
+        run: ll
 
       - name: echo information
         run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
