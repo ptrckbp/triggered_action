@@ -23,11 +23,11 @@ jobs:
           path: 'cloner'
       - name: Go into path
         working-directory: ./cloner
-        run: ls -al
+        run: cat .git/HEAD
 
       - name: Try command manually
         run: git describe --tags --abbrev=0
-        
+
       - name: Get Release Info
         id: 'get_release_details'
         uses: botpress/gh-actions/get_release_details@v1
