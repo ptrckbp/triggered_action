@@ -26,7 +26,7 @@ jobs:
         run: cat .git/HEAD
 
       - name: Try command manually
-        run: git describe --tags --abbrev=0
+        run: git status && pwd
 
       - name: Get Release Info
         id: 'get_release_details'
