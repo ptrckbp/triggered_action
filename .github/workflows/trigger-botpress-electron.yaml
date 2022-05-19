@@ -23,7 +23,7 @@ jobs:
           path: 'cloner'
       - name: Go into path
         working-directory: ./cloner
-        run: cat .git/HEAD
+        run: pwd
 
       - name: Try command manually
         run: pwd && git status
