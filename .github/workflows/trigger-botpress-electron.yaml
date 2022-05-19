@@ -22,8 +22,7 @@ jobs:
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'cloner'
       - name: Go into path
-        working-directory: ./cloner
-        run: pwd
+        run: cd cloner && pwd
 
       - name: Try command manually
         run: pwd && git status
@@ -35,8 +34,7 @@ jobs:
           path: ./cloner
       
       - name: Go out of path
-        working-directory: ".."
-        run: ls -al
+        run: cd .. && ls -al
 
       - name: echo information
         run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
