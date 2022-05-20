@@ -23,8 +23,6 @@ jobs:
           path: 'cloner'
       - name: Get Release Info
         id: 'get_release_details'
-        working-directory: cloner
-        run: echo 5
         uses: botpress/gh-actions/get_release_details@v1
         with:
           path: ./cloner
