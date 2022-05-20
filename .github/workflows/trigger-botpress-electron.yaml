@@ -10,25 +10,8 @@ jobs:
     name: 'Perform REST API'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          # Repository name with owner. For example, actions/checkout
-          # Default: ${{ github.repository }}
-          repository: 'botpress/botpress'
-          # Number of commits to fetch. 0 indicates all history for all branches and tags.
-          # Default: 1
-          fetch-depth: 15
-
-          # Relative path under $GITHUB_WORKSPACE to place the repository
-          path: 'cloner'
-      - name: Get Release Info
-        id: 'get_release_details'
-        uses: botpress/gh-actions/get_release_details@v1
-        with:
-          path: ./cloner
-      
-      - name: echo information
-        run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
+      - uses: tibdex/github-app-token@v1
+        id: generate-token
 
       - name: 'Call API'
         uses: indiesdev/curl@v1.1
@@ -42,8 +25,8 @@ jobs:
           method: 'POST'
 
           # Headers can be passed through json object string
-          headers: '{ "Accept": "application/vnd.github.v3+json","Authorization": "token ${{ secrets.PAT }}" }'
+          headers: '{ "Accept": "application/vnd.github.v3+json","Authorization": "token ${{ secrets.generate-token.outputs.token }}" }'
 
           # Body request
           # Apply only to POST|PUT request
-          body: '{"event_type": "remote-triggered-published","client_payload": {"BINARY_VERSION": "${{steps.get_release_details.outputs.latest_tag}}","DISPLAY_VERSION": "${{steps.get_release_details.outputs.version}}" } }'
+          body: '{"event_type": "remote-triggered-published" }'
