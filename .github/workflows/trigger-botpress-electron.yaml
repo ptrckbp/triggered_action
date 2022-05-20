@@ -21,21 +21,14 @@ jobs:
 
           # Relative path under $GITHUB_WORKSPACE to place the repository
           path: 'cloner'
-      - name: Go into path
-        run: cd cloner && pwd
-
-      - name: Try command manually
-        run: pwd && git status
-
       - name: Get Release Info
         id: 'get_release_details'
+        working-directory: cloner
+        run: echo 5
         uses: botpress/gh-actions/get_release_details@v1
         with:
           path: ./cloner
       
-      - name: Go out of path
-        run: cd .. && ls -al
-
       - name: echo information
         run: echo ${{steps.get_release_details.outputs.latest_tag}} ${{steps.get_release_details.outputs.version}}
 
